@@ -8,7 +8,6 @@ use Zend\Session\Container;
 
 class AdminAuth implements AdapterInterface
 {
-
     /**
      * Holds the credentials
      *
@@ -40,13 +39,11 @@ class AdminAuth implements AdapterInterface
      */
     public function authenticate()
     {
-        $result = $this->adminTable->select(array(
-            'uname' => $this->uname
-        ))->current();
+		$result = $this->adminTable->getAdminByUsername($this->uname);
 
-
-        // verify passwd
-        if ($result['passwd'] === $this->passwd) {
+		/** Verify the password */
+        if(password_verify($this->passwd, $result->passwd))
+		{
 
             $session = new Container('oauth_session');
             $session->setExpirationSeconds(36000);
@@ -56,8 +53,10 @@ class AdminAuth implements AdapterInterface
             $response = new Result(Result::SUCCESS, $result, array(
                 'Authentication successful.'
             ));
-        } else {
-            $response = new Result(Result::FAILURE, NULL, isset($result['errors']) ? $result['errors'] : array(
+        }
+		else
+		{
+            $response = new Result(Result::FAILURE, NULL, isset($result->errors) ? $result->errors : array(
                 'Invalid credentials.'
             ));
         }

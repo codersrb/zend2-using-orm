@@ -41,9 +41,19 @@ class IndexController extends AbstractActionController
 
 
 
+	/**
+	 * @todo Index action
+	 */
     public function indexAction()
     {
-        return new ViewModel();
+		/** Check if logged-in */
+        if(!$this->auth->hasIdentity())
+		{
+			$this->redirect()->toRoute('admin-login');
+        }
+
+		return new ViewModel(['title' => 'Dashboard']);
+
     }
 
 
@@ -123,15 +133,6 @@ class IndexController extends AbstractActionController
         $this->flashMessenger()->addErrorMessage('Successfully logged out');
 
         return $this->redirect()->toRoute('home');
-    }
-
-	public function getAlbumTable()
-    {
-        if (!$this->albumTable) {
-            $sm = $this->getServiceLocator();
-            $this->albumTable = $sm->get('Application\Model\AlbumTable');
-        }
-        return $this->albumTable;
     }
 
 

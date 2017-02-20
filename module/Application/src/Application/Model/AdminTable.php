@@ -31,6 +31,17 @@ class AdminTable
         return $row;
     }
 
+	public function getAdminByUsername($uname)
+    {
+        $rowset = $this->tableGateway->select(array('uname' => $uname));
+        $row = $rowset->current();
+        if(!$row)
+		{
+            throw new \Exception("Could not find row $uname");
+        }
+        return $row;
+    }
+
 	public function loginFilter()
     {
         $inputFilter = new InputFilter();

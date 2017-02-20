@@ -30,36 +30,64 @@ return array(
                     ),
                 ),
             ),
+			'logout' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/logout',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Index',
+                        'action'     => 'logout',
+                    ),
+                ),
+            ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
             // using the path /application/:controller/:action
-            'application' => array(
-                'type'    => 'Literal',
-                'options' => array(
-                    'route'    => '/application',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Application\Controller',
-                        'controller'    => 'Index',
-                        'action'        => 'index',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:controller[/:action]]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
-                    ),
-                ),
-            ),
+			'app' => array(
+             'type' => 'segment',
+             'options' => array(
+                 'route'    => '/[:controller[/:action[/:id]]]',
+                 'defaults' => array(
+                     '__NAMESPACE__' => 'Application\Controller',
+                     'controller'    => 'index',
+                     'action'        => 'index',
+                     'id'        => null,
+                 ),
+                 'constraints' => [
+                     'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                     'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                     'id'     => '[a-zA-Z0-9_-]*',
+                 ]
+             ),
+         ),
+
+			// 'app' => array(
+            //     'type'    => 'Literal',
+            //     'options' => array(
+            //         'route'    => '/app',
+            //         'defaults' => array(
+            //             '__NAMESPACE__' => 'Application\Controller',
+            //             'controller'    => 'Index',
+            //             'action'        => 'index',
+            //         ),
+            //     ),
+            //     'may_terminate' => true,
+            //     'child_routes' => array(
+            //         'default' => array(
+            //             'type'    => 'Segment',
+            //             'options' => array(
+            //                 'route'    => '/[:controller[/:action]]',
+            //                 'constraints' => array(
+            //                     'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+            //                     'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+            //                 ),
+            //                 'defaults' => array(
+            //                 ),
+            //             ),
+            //         ),
+            //     ),
+            // ),
         ),
     ),
     'service_manager' => array(
@@ -83,7 +111,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Index' => 'Application\Controller\IndexController'
+            'Application\Controller\Index' => 'Application\Controller\IndexController',
+            'Application\Controller\User' => 'Application\Controller\UserController',
         ),
     ),
     'view_manager' => array(

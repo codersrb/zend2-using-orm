@@ -1,5 +1,4 @@
 <?php echo $this->doctype(); ?>
-
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -62,7 +61,8 @@
 
 			<aside class="main-sidebar">
 				<section class="sidebar">
-					<?php /* if (!empty($this->layout()->identity))
+					<?php
+					if (!empty($this->layout()->identity))
 					{
 						?>
 						<ul class="sidebar-menu">
@@ -73,10 +73,10 @@
 									<span>Users</span>
 							</a>
 								<ul class="treeview-menu">
-									<li><a href="<?php echo $this->url('user-admin');?>"><i
+									<li><a href="<?php echo $this->url('app', ['controller' => 'user']) ;?>"><i
 											class="fa fa-user"></i> All Users</a></li>
 									<li><a
-										href="<?php echo $this->url('user-admin' , array('action'=>'add'));?>"><i
+										href="<?php echo $this->url('app' , ['controller' => 'user', 'action'=>'add']);?>"><i
 											class="fa fa-user"></i> Add User</a></li>
 								</ul>
 							</li>
@@ -92,13 +92,13 @@
 				else
 				{
 					?>
-					<ul class="sidebar-menu">
-							<li><a href="<?php echo $this->url('admin-login'); ?>"> <i
-									class="fa fa-lock"></i> <span>Login</span>
-							</a></li>
-					</ul>
-				<?php
-			} */
+						<ul class="sidebar-menu">
+								<li><a href="<?php echo $this->url('admin-login'); ?>"> <i
+										class="fa fa-lock"></i> <span>Login</span>
+								</a></li>
+						</ul>
+					<?php
+				}
 				?>
 				</section>
 			</aside>

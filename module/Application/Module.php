@@ -22,6 +22,9 @@ use Application\Model\AlbumTable;
 use Application\Model\Admin;
 use Application\Model\AdminTable;
 
+use Application\Model\User;
+use Application\Model\UserTable;
+
 class Module
 {
 
@@ -29,28 +32,53 @@ class Module
     {
         return array(
             'factories' => array(
-                'Application\Model\AlbumTable' =>  function($sm) {
+				/**
+				 * @todo Gateway Adapter setup
+				 */
+                'Application\Model\AlbumTable' =>  function($sm)
+				{
                     $tableGateway = $sm->get('AlbumTableGateway');
                     $table = new AlbumTable($tableGateway);
                     return $table;
                 },
-				'Application\Model\AdminTable' =>  function($sm) {
+				'Application\Model\AdminTable' =>  function($sm)
+				{
                     $tableGateway = $sm->get('AdminTableGateway');
                     $table = new AdminTable($tableGateway);
                     return $table;
                 },
+				'Application\Model\UserTable' =>  function($sm)
+				{
+                    $tableGateway = $sm->get('UserTableGateway');
+                    $table = new UserTable($tableGateway);
+                    return $table;
+                },
 
-                'AlbumTableGateway' => function ($sm) {
+
+
+				/**
+				 * @todo Gateways
+				 */
+                'AlbumTableGateway' => function ($sm)
+				{
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new Album());
                     return new TableGateway('album', $dbAdapter, null, $resultSetPrototype);
                 },
-				'AdminTableGateway' => function ($sm) {
+				'AdminTableGateway' => function ($sm)
+				{
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new Admin());
                     return new TableGateway('tbl_admin', $dbAdapter, null, $resultSetPrototype);
+                },
+				'UserTableGateway' => function ($sm)
+				{
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new User());
+                    return new TableGateway('tbl_users', $dbAdapter, null, $resultSetPrototype);
                 },
             ),
         );
