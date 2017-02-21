@@ -45,22 +45,22 @@ return array(
             // module. Simply drop new controllers in, and you can access them
             // using the path /application/:controller/:action
 			'app' => array(
-             'type' => 'segment',
-             'options' => array(
-                 'route'    => '/[:controller[/:action[/:id]]]',
-                 'defaults' => array(
-                     '__NAMESPACE__' => 'Application\Controller',
-                     'controller'    => 'index',
-                     'action'        => 'index',
-                     'id'        => null,
-                 ),
-                 'constraints' => [
-                     'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                     'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                     'id'     => '[a-zA-Z0-9_-]*',
-                 ]
-             ),
-         ),
+	             'type' => 'segment',
+	             'options' => array(
+	                 'route'    => '/app/[:controller[/:action[/:id]]]',
+	                 'defaults' => array(
+	                     '__NAMESPACE__' => 'Application\Controller',
+	                     'controller'    => 'index',
+	                     'action'        => 'index',
+	                     'id'        => null,
+	                 ),
+	                 'constraints' => [
+	                     'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+	                     'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+	                     'id'     => '[a-zA-Z0-9_-]*',
+	                 ]
+	             ),
+	         ),
 
 			// 'app' => array(
             //     'type'    => 'Literal',

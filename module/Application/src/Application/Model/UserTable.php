@@ -20,9 +20,6 @@ class UserTable
 
     public function findOne($input)
     {
-		echo '<pre>';
-		print_r($tableGateway);
-		die;
 		/**
 		 * @todo is array
 		 */
@@ -32,9 +29,9 @@ class UserTable
 		}
 		else
 		{
-			$rowset = $this->tableGateway->select(array('pkUserID' => $id));
+			$rowset = $this->tableGateway->select(array('pkUserID' => $input));
 		}
-        $id  = (int) $id;
+		
         $row = $rowset->current();
         if (!$row) {
             throw new \Exception("Could not find row $id");

@@ -9,7 +9,10 @@ use Zend\Validator\File\IsImage;
 use Zend\Validator\File\Size;
 use Zend\File\Transfer\Adapter\Http;
 
-use Application\Forms\EditBarForm;
+use Application\Forms\UserForm;
+use Exception;
+
+use Application\Model\User;
 
 
 /**
@@ -64,11 +67,62 @@ class UserController extends AbstractActionController
 		]);
     }
 
+	public function addAction()
+	{
+		$form = new UserForm();
+
+		$request = $this->getRequest();
+		if($request->isPost())
+		{
+		 	$user = new User();
+		 	$form->setInputFilter($user->getInputFilter());
+		 	$form->setData($request->getPost());
+
+			 if($form->isValid())
+			 {
+			     $user->exchangeArray($form->getData());
+			     $this->getAlbumTable()->saveAlbum($user);
+
+			     // Redirect to list of albums
+			     return $this->redirect()->toRoute('app', ['controller' => 'user']);
+			 }
+		}
+		return new ViewModel([
+			'form' => $form
+		]);
+	}
+
 	public function viewAction()
 	{
+		$id = (int) $this->params()->fromRoute('id', 0);
+
+		if(!$id)
+		{
+			return $this->redirect()->toRoute('app', array('controller' => 'user'));
+		}
+
+
+		try
+		{
+			$model = $this->getUserTable()->findOne($id);
+		}
+		catch(Exception $ex)
+		{
+			return $this->redirect()->toRoute('app', array('controller' => 'user'));
+		}
+
 		return new ViewModel([
-			'title' => 'View'
+			'model' => $model
 		]);
+	}
+
+
+	public function editAction()
+	{
+
+		$id = (int) $this->params()->fromRoute('id', 0);
+
+		return new ViewModel();
 	}
 
 

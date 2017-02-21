@@ -1,0 +1,24 @@
+<?php
+/**
+ * @todo Initialise the view
+ */
+$title = 'Add User';
+$this->headTitle($title);
+?>
+<div class="user-view">
+	<div class="row">
+		<div class="col-md-12">
+			<h3><?php echo $title; ?></h3>
+			<?php
+			 $form->prepare();
+			 echo $this->form()->openTag($form);
+			 echo $this->formHidden($form->get('pkUserID'));
+			 echo $this->formRow($form->get('userFullName'));
+			 echo $this->formRow($form->get('userEmail'));
+			 echo $this->formRow($form->get('userStatus'));
+			 echo $this->formSubmit($form->get('submit'));
+			 echo $this->form()->closeTag();
+			?>
+		</div>
+	</div>
+</div>
